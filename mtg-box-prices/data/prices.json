@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-17T22:53:24+00:00",
+ "generated_at": "2026-11-17T23:02:05+00:00",
  "tcgcsv_updated": "2026-11-17T20:05:43+0000",
  "sets": [
   {
@@ -9,6 +9,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/trk.svg?1794805200",
    "group_id": 24766,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/star-trek?productLineName=magic&setName=star-trek&view=grid",
    "products": {
     "play": {
      "product_id": 706138,
@@ -16,10 +17,12 @@
      "url": "https://www.tcgplayer.com/product/706138",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/706138_200w.jpg",
      "current": {
-      "market": 108.95,
+      "market": 109.13,
       "low": 103.74,
       "mid": 134.97,
-      "high": 220.0
+      "high": 220.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -610,10 +613,12 @@
      "url": "https://www.tcgplayer.com/product/706142",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/706142_200w.jpg",
      "current": {
-      "market": 382.28,
+      "market": 384.65,
       "low": 380.81,
       "mid": 477.85,
-      "high": 947.0
+      "high": 947.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -1207,6 +1212,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/fra.svg?1794805200",
    "group_id": 24684,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/reality-fracture?productLineName=magic&setName=reality-fracture&view=grid",
    "products": {
     "play": {
      "product_id": 692980,
@@ -1214,10 +1220,12 @@
      "url": "https://www.tcgplayer.com/product/692980",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/692980_200w.jpg",
      "current": {
-      "market": 115.97,
+      "market": 115.95,
       "low": 114.95,
       "mid": 141.75,
-      "high": 298.98
+      "high": 298.98,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -1811,7 +1819,9 @@
       "market": 369.61,
       "low": 362.99,
       "mid": 458.4,
-      "high": 1999.95
+      "high": 1999.95,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -2405,6 +2415,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/hob.svg?1794805200",
    "group_id": 24683,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/the-hobbit?productLineName=magic&setName=the-hobbit&view=grid",
    "products": {
     "play": {
      "product_id": 692960,
@@ -2412,10 +2423,12 @@
      "url": "https://www.tcgplayer.com/product/692960",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/692960_200w.jpg",
      "current": {
-      "market": 132.97,
+      "market": 133.21,
       "low": 125.0,
       "mid": 188.88,
-      "high": 9999.0
+      "high": 9999.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -3006,10 +3019,12 @@
      "url": "https://www.tcgplayer.com/product/692963",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/692963_200w.jpg",
      "current": {
-      "market": 543.78,
+      "market": 542.98,
       "low": 524.0,
       "mid": 799.99,
-      "high": 3000.0
+      "high": 3000.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -3603,6 +3618,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/msh.svg?1794805200",
    "group_id": 24553,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/marvel-super-heroes?productLineName=magic&setName=marvel-super-heroes&view=grid",
    "products": {
     "play": {
      "product_id": 675603,
@@ -3610,10 +3626,12 @@
      "url": "https://www.tcgplayer.com/product/675603",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/675603_200w.jpg",
      "current": {
-      "market": 100.68,
+      "market": 100.97,
       "low": 95.0,
       "mid": 140.0,
-      "high": 374.07
+      "high": 374.07,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -4207,7 +4225,9 @@
       "market": 431.88,
       "low": 394.0,
       "mid": 549.99,
-      "high": 1795.0
+      "high": 1795.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -4801,6 +4821,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/sos.svg?1794805200",
    "group_id": 24601,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/secrets-of-strixhaven?productLineName=magic&setName=secrets-of-strixhaven&view=grid",
    "products": {
     "play": {
      "product_id": 675555,
@@ -4808,10 +4829,12 @@
      "url": "https://www.tcgplayer.com/product/675555",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/675555_200w.jpg",
      "current": {
-      "market": 143.54,
+      "market": 143.74,
       "low": 135.99,
       "mid": 159.99,
-      "high": 351.14
+      "high": 351.14,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -5402,10 +5425,12 @@
      "url": "https://www.tcgplayer.com/product/675558",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/675558_200w.jpg",
      "current": {
-      "market": 498.24,
+      "market": 498.44,
       "low": 493.4,
       "mid": 599.98,
-      "high": 9999.0
+      "high": 9999.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -5999,6 +6024,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/tmt.svg?1794805200",
    "group_id": 24495,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/teenage-mutant-ninja-turtles?productLineName=magic&setName=teenage-mutant-ninja-turtles&view=grid",
    "products": {
     "play": {
      "product_id": 657849,
@@ -6006,10 +6032,12 @@
      "url": "https://www.tcgplayer.com/product/657849",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/657849_200w.jpg",
      "current": {
-      "market": 100.01,
+      "market": 99.55,
       "low": 90.0,
       "mid": 146.8,
-      "high": 9999.0
+      "high": 9999.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -6603,7 +6631,9 @@
       "market": 437.14,
       "low": 412.49,
       "mid": 549.89,
-      "high": 1599.99
+      "high": 1599.99,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -7197,6 +7227,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/ecl.svg?1794805200",
    "group_id": 24463,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/lorwyn-eclipsed?productLineName=magic&setName=lorwyn-eclipsed&view=grid",
    "products": {
     "play": {
      "product_id": 656312,
@@ -7204,10 +7235,12 @@
      "url": "https://www.tcgplayer.com/product/656312",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/656312_200w.jpg",
      "current": {
-      "market": 105.5,
+      "market": 105.2,
       "low": 104.0,
       "mid": 149.94,
-      "high": 9999.0
+      "high": 9999.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -7801,7 +7834,9 @@
       "market": 402.62,
       "low": 390.0,
       "mid": 513.36,
-      "high": 1501.99
+      "high": 1501.99,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -8395,6 +8430,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/tla.svg?1794805200",
    "group_id": 24421,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/avatar-the-last-airbender?productLineName=magic&setName=avatar-the-last-airbender&view=grid",
    "products": {
     "play": {
      "product_id": 648643,
@@ -8402,10 +8438,12 @@
      "url": "https://www.tcgplayer.com/product/648643",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/648643_200w.jpg",
      "current": {
-      "market": 124.29,
+      "market": 124.7,
       "low": 118.95,
       "mid": 159.71,
-      "high": 999.0
+      "high": 999.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -8999,7 +9037,9 @@
       "market": 480.62,
       "low": 449.99,
       "mid": 599.0,
-      "high": 1500.0
+      "high": 1500.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -9593,6 +9633,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/spm.svg?1794805200",
    "group_id": 24245,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/marvels-spider-man?productLineName=magic&setName=marvels-spider-man&view=grid",
    "products": {
     "play": {
      "product_id": 621107,
@@ -9603,7 +9644,9 @@
       "market": 110.69,
       "low": 109.29,
       "mid": 150.0,
-      "high": 500.0
+      "high": 500.0,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -10197,7 +10240,9 @@
       "market": 381.53,
       "low": 368.99,
       "mid": 588.0,
-      "high": 1795.95
+      "high": 1795.95,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:01+00:00"
      },
      "history": {
       "annual": [
@@ -10791,6 +10836,7 @@
    "set_type": "expansion",
    "icon_svg_uri": "https://svgs.scryfall.io/sets/eoe.svg?1794805200",
    "group_id": 24233,
+   "tcgplayer_url": "https://www.tcgplayer.com/search/magic/edge-of-eternities?productLineName=magic&setName=edge-of-eternities&view=grid",
    "products": {
     "play": {
      "product_id": 619674,
@@ -10801,7 +10847,9 @@
       "market": 192.74,
       "low": 182.0,
       "mid": 204.99,
-      "high": 301.99
+      "high": 301.99,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:02+00:00"
      },
      "history": {
       "annual": [
@@ -11395,7 +11443,9 @@
       "market": 740.1,
       "low": 709.0,
       "mid": 874.92,
-      "high": 1835.79
+      "high": 1835.79,
+      "source": "TCGplayer",
+      "checked_at": "2026-11-17T23:02+00:00"
      },
      "history": {
       "annual": [
