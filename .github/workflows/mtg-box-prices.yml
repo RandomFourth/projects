@@ -9,6 +9,8 @@ on:
   push:
     paths:
       - "mtg-box-prices/index.html"
+      - "mtg-box-prices/manifest.webmanifest"
+      - "mtg-box-prices/icons/**"
       - "mtg-box-prices/scripts/**"
       - "mtg-box-prices/config/**"
 
@@ -24,6 +26,8 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    outputs:
+      pages: ${{ steps.pages.outputs.on }}
     steps:
       - uses: actions/checkout@v4
 
@@ -47,14 +51,31 @@ jobs:
             git push
           fi
 
-      - uses: actions/configure-pages@v5
+      # Publishing only happens once GitHub Pages is turned on in the repo
+      # settings. Until then the data still updates and the run passes.
+      - name: Check whether GitHub Pages is on
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${{ github.repository }}/pages" --silent 2>/dev/null; then
+            echo "on=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "on=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages is off, so the dashboard was not published. The price data was still updated."
+          fi
 
-      - uses: actions/upload-pages-artifact@v3
+      - if: steps.pages.outputs.on == 'true'
+        uses: actions/configure-pages@v5
+
+      - if: steps.pages.outputs.on == 'true'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: mtg-box-prices
 
   deploy:
     needs: update
+    if: needs.update.outputs.pages == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

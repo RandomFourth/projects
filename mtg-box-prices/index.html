@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MTG Booster Box Prices</title>
+<meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Box Prices">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
   :root {
     color-scheme: light;
@@ -63,7 +72,7 @@
     color: var(--text-primary);
     font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 48px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: calc(24px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(48px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
   h1 { font-size: 22px; margin: 0 0 4px; }
   .sub { color: var(--text-secondary); margin: 0; }
   .notice { margin: 12px 0 0; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px;
@@ -79,8 +88,10 @@
 
   .panel-box { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; }
   .table-wrap { overflow-x: auto; margin-bottom: 20px; }
-  table { border-collapse: collapse; width: 100%; min-width: 640px; }
-  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  td .meta { display: block; }
+  td.num strong { font-weight: 600; display: block; }
   th { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
   tbody tr:last-child td { border-bottom: 0; }
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -106,7 +117,7 @@
   .p-label a:hover { text-decoration: underline; }
   .p-price { display: flex; align-items: baseline; gap: 8px; margin: 2px 0 6px; }
   .p-price strong { font-size: 22px; font-variant-numeric: tabular-nums; }
-  .chg { font-size: 13px; font-variant-numeric: tabular-nums; }
+  .chg { font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .chg.up { color: var(--up); }
   .chg.down { color: var(--down); }
   .chg.flat { color: var(--text-muted); }
@@ -143,9 +154,9 @@
     <table>
       <thead>
         <tr>
-          <th>Set</th><th>Released</th>
-          <th class="num"><span class="swatch" style="background:var(--series-play)"></span>Play market</th><th class="num">Change</th>
-          <th class="num"><span class="swatch" style="background:var(--series-collector)"></span>Collector market</th><th class="num">Change</th>
+          <th>Set</th>
+          <th class="num"><span class="swatch" style="background:var(--series-play)"></span>Play</th>
+          <th class="num"><span class="swatch" style="background:var(--series-collector)"></span>Collector</th>
         </tr>
       </thead>
       <tbody id="summary"></tbody>
@@ -155,7 +166,7 @@
   <div class="grid" id="cards"></div>
 
   <p class="foot">
-    Market price is TCGplayer's figure from recent sales, grouped by week (by day where TCGplayer offers it).
+    Market price is TCGplayer's figure from recent sales, grouped by week (every 3 days in the 1M and 3M views).
     Change compares the first and last point in the selected range. Data refreshes once a day; this page checks for new data every 15 minutes.
     <span id="srcnote"></span>
   </p>
@@ -189,7 +200,7 @@
     if (!src.length) return [];
     const last = parse(src[src.length - 1].d);
     const cutoff = addDays(last, -days);
-    const pts = src.filter((p) => parse(p.d) > cutoff && p.m != null);
+    const pts = src.filter((p) => parse(p.d) > cutoff && p.m > 0);
     // Attach each bucket's end date so tooltips read "Mar 2 to Mar 8".
     return pts.map((p, i) => {
       const start = parse(p.d);
@@ -198,6 +209,11 @@
       const end = next ? addDays(next, -1) : addDays(start, Math.max(prevGap, 1) - 1);
       return { ...p, start, end };
     });
+  }
+
+  function periodName(pts) {
+    const gap = pts.length > 1 ? Math.round((pts[1].start - pts[0].start) / 864e5) : 7;
+    return gap <= 1 ? "day" : gap === 7 ? "week" : `${gap} days`;
   }
 
   function change(pts) {
@@ -224,9 +240,9 @@
         const p = s.products && s.products[k];
         const pts = seriesFor(p, state.days);
         const market = p && p.current && p.current.market != null ? p.current.market : pts.length ? pts[pts.length - 1].m : null;
-        return `<td class="num">${p ? money(market) : "–"}</td><td class="num">${p ? chgHtml(change(pts)) : "–"}</td>`;
+        return `<td class="num">${p ? `<strong>${money(market)}</strong>${chgHtml(change(pts))}` : "–"}</td>`;
       }).join("");
-      return `<tr data-i="${i}"><td>${esc(s.name)} <span class="meta">${esc(s.code)}</span></td><td>${fmt(parse(s.released_at), true)}</td>${cells}</tr>`;
+      return `<tr data-i="${i}"><td>${esc(s.name)}<span class="meta">${esc(s.code)} · ${fmt(parse(s.released_at), true)}</span></td>${cells}</tr>`;
     });
     $("#summary").innerHTML = rows.join("");
     $("#summary").querySelectorAll("tr").forEach((tr) =>
@@ -248,7 +264,7 @@
       <div class="p-price"><strong>${money(last.m)}</strong>${chgHtml(change(pts))}</div>
       <div class="chart-price"><canvas id="c-${si}-${k}-p" role="img" aria-label="${esc(s.name)} ${KIND_LABEL[k]} market price, ${rangeLabel(pts)}"></canvas></div>
       <div class="chart-qty"><canvas id="c-${si}-${k}-q" role="img" aria-label="Items sold per period"></canvas></div>
-      <div class="axis-note">Items sold per ${pts.length > 1 && (pts[1].start - pts[0].start) / 864e5 < 2 ? "day" : "week"} · ${rangeLabel(pts)}</div>
+      <div class="axis-note">Items sold per ${periodName(pts)} · ${rangeLabel(pts)}</div>
     </div>`;
   }
 
@@ -261,7 +277,7 @@
       const age = Math.round((Date.now() - rel) / 864e5);
       const ageTxt = age >= 0 ? `${age} days since release` : `preorder, releases in ${-age} days`;
       return `<section class="panel-box set" id="set-${i}">
-        <div class="set-head">${s.icon_svg_uri ? `<img src="${esc(s.icon_svg_uri)}" alt="">` : ""}<h2>${esc(s.name)}</h2>
+        <div class="set-head">${s.icon_svg_uri ? `<img src="${esc(s.icon_svg_uri)}" alt="" onerror="this.remove()">` : ""}<h2>${esc(s.name)}</h2>
           <span class="meta">${esc(s.code)} · released ${fmt(rel, true)} · ${ageTxt}</span></div>
         <div class="panels ${kinds.length === 1 ? "single" : ""}">${kinds.map((k) => productHtml(s, k, i)).join("")}</div>
       </section>`;
@@ -367,6 +383,7 @@
   new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   load(true);
   setInterval(() => load(false), POLL_MS);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") load(false); });
 })();
 </script>
 </body>

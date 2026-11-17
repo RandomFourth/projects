@@ -13,6 +13,10 @@ A dashboard of TCGplayer market price history for the 10 newest Magic sets, show
 
 The page reloads `data/prices.json` every 15 minutes, so an open tab picks up each daily update on its own.
 
+## Put it on your iPhone
+
+Once the site is published (see Setup), open its address in Safari, tap the Share button, then "Add to Home Screen". It gets its own icon and opens full screen like an app. It checks for new prices whenever you open it.
+
 ## Setup
 
 1. In the repository settings, open Pages and set Source to "GitHub Actions".
@@ -42,4 +46,3 @@ Edit `config/overrides.json`:
 ## Notes
 
 - The TCGplayer history endpoint is undocumented and could change or start refusing requests. If a product's history fails, the last good history is kept and the problem is listed at the top of the page.
-- `data/prices.json` currently holds seed data (Lorwyn Eclipsed Play Booster Display only, copied from the product page). The first workflow run replaces it.

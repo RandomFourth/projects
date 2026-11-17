@@ -171,6 +171,21 @@ def parse_history(raw: dict) -> list[dict]:
             }
         )
     points.sort(key=lambda p: p["d"])
+    # TCGplayer dates each bucket by the day after it ends: the bucket its
+    # site shows as "11/9 to 11/15" arrives dated 11/16. Shift each date back
+    # by the bucket length so "d" is the first day the bucket covers.
+    dates = [dt.date.fromisoformat(p["d"]) for p in points]
+    for i, p in enumerate(points):
+        if len(dates) < 2:
+            break
+        gap = (dates[i] - dates[i - 1]) if i else (dates[1] - dates[0])
+        p["d"] = (dates[i] - gap).isoformat()
+        if not p["q"]:  # no sales that period: TCGplayer sends 0 for low/high
+            p["lo"] = p["hi"] = None
+    # Periods before the product was listed come back with a $0 market price.
+    for p in points:
+        if not p["m"]:
+            p["m"] = None
     return points
 
 
