@@ -128,6 +128,26 @@
            border: 1px dashed var(--border); border-radius: 8px; padding: 12px; font-size: 13px; }
   .foot { margin-top: 24px; color: var(--text-muted); font-size: 12px; }
   .foot a { color: inherit; }
+  a.set-link { color: inherit; text-decoration: none; }
+  a.set-link:hover { text-decoration: underline; }
+  a.set-link .ext { color: var(--text-muted); font-size: 0.8em; font-weight: 400; }
+  .p-label a.box-link { color: var(--text-secondary); }
+  .btn { border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary); border-radius: 8px;
+         padding: 6px 12px; font: inherit; cursor: pointer; }
+  .btn:disabled { opacity: 0.6; cursor: default; }
+  .btn.primary { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+  dialog { border: 1px solid var(--border); border-radius: 12px; background: var(--surface-1); color: var(--text-primary);
+           width: min(480px, calc(100vw - 32px)); padding: 20px; }
+  dialog::backdrop { background: rgb(0 0 0 / 0.4); }
+  dialog h3 { margin: 0 0 8px; font-size: 16px; }
+  dialog p, dialog ol { color: var(--text-secondary); font-size: 13px; margin: 0 0 10px; }
+  dialog ol { padding-left: 20px; }
+  dialog a { color: inherit; }
+  dialog input { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-0);
+                 color: var(--text-primary); font: 13px ui-monospace, monospace; margin: 4px 0 12px; }
+  .dlg-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .dlg-actions .left { margin-right: auto; }
+  .dlg-msg { min-height: 1.2em; font-size: 13px; color: var(--down); margin: -4px 0 10px; }
 </style>
 </head>
 <body>
@@ -148,6 +168,7 @@
     </div>
     <span class="spacer"></span>
     <span class="status" id="refresh"></span>
+    <button class="btn" id="refresh-btn" type="button">↻ Refresh prices</button>
   </div>
 
   <div class="panel-box table-wrap">
@@ -167,10 +188,30 @@
 
   <p class="foot">
     Market price is TCGplayer's figure from recent sales, grouped by week (every 3 days in the 1M and 3M views).
-    Change compares the first and last point in the selected range. Data refreshes once a day; this page checks for new data every 15 minutes.
+    Change compares the first and last point in the selected range. Prices update automatically every 6 hours, or right away with Refresh prices. This page checks for new data every 15 minutes and whenever you open it.
     <span id="srcnote"></span>
+    <a href="#" id="refresh-settings">Refresh button settings</a>
   </p>
 </div>
+
+<dialog id="setup">
+  <h3>Set up the Refresh button</h3>
+  <p>The button asks GitHub to run the price update now. It needs a GitHub token, which is saved only in this browser on this device.</p>
+  <ol>
+    <li>Open <a id="token-link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub's new token page</a> and sign in.</li>
+    <li>Give it a name. Under Repository access choose <b>Only select repositories</b> and pick <b id="repo-name">projects</b>.</li>
+    <li>Under Permissions, add <b>Actions</b> and set it to <b>Read and write</b>. Nothing else is needed.</li>
+    <li>Click Generate token, copy it, and paste it here.</li>
+  </ol>
+  <input id="token-input" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+  <div class="dlg-msg" id="token-msg"></div>
+  <div class="dlg-actions">
+    <a class="left status" id="run-on-github" href="#" target="_blank" rel="noopener">Or run it on GitHub</a>
+    <button class="btn" type="button" id="token-remove">Remove token</button>
+    <button class="btn" type="button" id="token-cancel">Cancel</button>
+    <button class="btn primary" type="button" id="token-save">Save and refresh</button>
+  </div>
+</dialog>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
@@ -242,17 +283,23 @@
         const market = p && p.current && p.current.market != null ? p.current.market : pts.length ? pts[pts.length - 1].m : null;
         return `<td class="num">${p ? `<strong>${money(market)}</strong>${chgHtml(change(pts))}` : "–"}</td>`;
       }).join("");
-      return `<tr data-i="${i}"><td>${esc(s.name)}<span class="meta">${esc(s.code)} · ${fmt(parse(s.released_at), true)}</span></td>${cells}</tr>`;
+      return `<tr data-i="${i}"><td>${setName(s)}<span class="meta">${esc(s.code)} · ${fmt(parse(s.released_at), true)}</span></td>${cells}</tr>`;
     });
     $("#summary").innerHTML = rows.join("");
     $("#summary").querySelectorAll("tr").forEach((tr) =>
-      tr.addEventListener("click", () => document.getElementById("set-" + tr.dataset.i).scrollIntoView({ behavior: "smooth" })));
+      tr.addEventListener("click", (e) => { if (!e.target.closest("a")) document.getElementById("set-" + tr.dataset.i).scrollIntoView({ behavior: "smooth" }); }));
+  }
+
+  function setName(s, arrow) {
+    if (!s.tcgplayer_url) return esc(s.name);
+    return `<a class="set-link" href="${esc(s.tcgplayer_url)}" target="_blank" rel="noopener" title="${esc(s.name)} on TCGplayer">${esc(s.name)}${arrow ? ' <span class="ext">↗</span>' : ""}</a>`;
   }
 
   function productHtml(s, k, si) {
     const p = s.products && s.products[k];
     const pts = seriesFor(p, state.days);
-    const head = `<div class="p-label"><span><span class="swatch" style="background:var(--series-${k})"></span>${KIND_LABEL[k]}</span>${
+    const label = p ? `<a class="box-link" href="${esc(p.url)}" target="_blank" rel="noopener">${KIND_LABEL[k]}</a>` : KIND_LABEL[k];
+    const head = `<div class="p-label"><span><span class="swatch" style="background:var(--series-${k})"></span>${label}</span>${
       p ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">TCGplayer ↗</a>` : ""}</div>`;
     if (!p) return `<div class="product">${head}<div class="empty">${data.seed ? "Waiting for the first scheduled update." : "Not listed on TCGplayer for this set."}</div></div>`;
     if (pts.length < 2) {
@@ -277,7 +324,7 @@
       const age = Math.round((Date.now() - rel) / 864e5);
       const ageTxt = age >= 0 ? `${age} days since release` : `preorder, releases in ${-age} days`;
       return `<section class="panel-box set" id="set-${i}">
-        <div class="set-head">${s.icon_svg_uri ? `<img src="${esc(s.icon_svg_uri)}" alt="" onerror="this.remove()">` : ""}<h2>${esc(s.name)}</h2>
+        <div class="set-head">${s.icon_svg_uri ? `<img src="${esc(s.icon_svg_uri)}" alt="" onerror="this.remove()">` : ""}<h2>${setName(s, true)}</h2>
           <span class="meta">${esc(s.code)} · released ${fmt(rel, true)} · ${ageTxt}</span></div>
         <div class="panels ${kinds.length === 1 ? "single" : ""}">${kinds.map((k) => productHtml(s, k, i)).join("")}</div>
       </section>`;
@@ -353,12 +400,114 @@
       const changed = !data || next.generated_at !== data.generated_at;
       data = next;
       if (changed) render();
-      $("#refresh").textContent = `Checked ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+      if (!refreshing) $("#refresh").textContent = `Checked ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
     } catch (err) {
       if (initial) $("#updated").textContent = `Could not load ${DATA_URL} (${err.message}).`;
-      $("#refresh").textContent = "Check for new data failed; retrying in 15 minutes";
+      if (!refreshing) $("#refresh").textContent = "Check for new data failed; retrying in 15 minutes";
     }
   }
+
+  // ---------------------------------------------------------------- refresh button
+  // The page is a static file, so it cannot pull prices itself. The button asks
+  // GitHub to run the "MTG box prices" workflow now, waits for it to finish and
+  // publish, then reloads the data. It uses a token saved in this browser only.
+  const GH = (() => {
+    const m = location.hostname.match(/^([^.]+)\.github\.io$/i);
+    const owner = m ? m[1] : "RandomFourth";
+    const repo = m ? (location.pathname.split("/")[1] || `${owner}.github.io`) : "projects";
+    return { owner, repo, workflow: "mtg-box-prices.yml" };
+  })();
+  const TOKEN_KEY = "mtgbox-gh-token";
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const getToken = () => { try { return localStorage.getItem(TOKEN_KEY) || ""; } catch (_) { return ""; } };
+  const setToken = (t) => { try { t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY); } catch (_) {} };
+  let refreshing = false;
+
+  async function gh(path, opts = {}, token = getToken()) {
+    const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}${path}`, {
+      ...opts,
+      headers: { Accept: "application/vnd.github+json", Authorization: `Bearer ${token}`,
+                 ...(opts.body ? { "Content-Type": "application/json" } : {}) },
+    });
+    if (!res.ok) { const e = new Error(`GitHub said ${res.status}`); e.status = res.status; throw e; }
+    return res.status === 204 ? null : res.json();
+  }
+
+  function status(text) { $("#refresh").textContent = text; }
+
+  async function refreshNow() {
+    if (!getToken()) return openSetup();
+    if (refreshing) return;
+    refreshing = true;
+    const btn = $("#refresh-btn");
+    btn.disabled = true;
+    const before = data && data.generated_at;
+    try {
+      status("Starting update…");
+      const repo = await gh("");
+      const asked = Date.now() - 60e3; // allow for clock differences
+      await gh(`/actions/workflows/${GH.workflow}/dispatches`, { method: "POST", body: JSON.stringify({ ref: repo.default_branch }) });
+      let run = null;
+      const deadline = Date.now() + 15 * 60e3;
+      while (Date.now() < deadline) {
+        await sleep(8000);
+        if (!run) {
+          const list = await gh(`/actions/workflows/${GH.workflow}/runs?event=workflow_dispatch&per_page=5`);
+          run = list.workflow_runs.find((r) => Date.parse(r.created_at) >= asked) || null;
+          status("Waiting for GitHub to start…");
+          continue;
+        }
+        if (run.status !== "completed") {
+          run = await gh(`/actions/runs/${run.id}`);
+          status(run.status === "completed" ? "Publishing…" : run.status === "in_progress" ? "Pulling prices from TCGplayer…" : "Queued on GitHub…");
+          if (run.status === "completed" && run.conclusion !== "success") throw new Error(`the update ${run.conclusion}`);
+          continue;
+        }
+        await load(false); // the run is done; wait for the published file to change
+        if (data && data.generated_at !== before) {
+          status(`Updated ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`);
+          return;
+        }
+      }
+      throw new Error("it took longer than 15 minutes");
+    } catch (err) {
+      if (err.status === 401) { setToken(""); status("Token expired or was revoked. Tap Refresh to set it up again."); }
+      else if (err.status === 403 || err.status === 404) status("The token can't run the update. It needs Actions: Read and write on this repository.");
+      else status(`Refresh failed: ${err.message}`);
+    } finally {
+      refreshing = false;
+      btn.disabled = false;
+    }
+  }
+
+  function openSetup() {
+    const dlg = $("#setup");
+    $("#repo-name").textContent = GH.repo;
+    $("#run-on-github").href = `https://github.com/${GH.owner}/${GH.repo}/actions/workflows/${GH.workflow}`;
+    $("#token-input").value = "";
+    $("#token-msg").textContent = "";
+    $("#token-remove").hidden = !getToken();
+    dlg.showModal();
+  }
+
+  $("#refresh-btn").addEventListener("click", refreshNow);
+  $("#refresh-btn").addEventListener("contextmenu", (e) => { e.preventDefault(); openSetup(); });
+  $("#token-cancel").addEventListener("click", () => $("#setup").close());
+  $("#refresh-settings").addEventListener("click", (e) => { e.preventDefault(); openSetup(); });
+  $("#token-remove").addEventListener("click", () => { setToken(""); $("#setup").close(); status("Token removed from this device."); });
+  $("#token-save").addEventListener("click", async () => {
+    const t = $("#token-input").value.trim();
+    if (!t) { $("#token-msg").textContent = "Paste the token first."; return; }
+    $("#token-msg").textContent = "Checking…";
+    try {
+      await gh(`/actions/workflows/${GH.workflow}`, {}, t);
+      setToken(t);
+      $("#setup").close();
+      refreshNow();
+    } catch (err) {
+      $("#token-msg").textContent = err.status === 401 ? "GitHub didn't accept that token." : `That token can't see this repository's workflows (${err.message}).`;
+    }
+  });
 
   function wireSeg(id, key, cast) {
     const seg = document.getElementById(id);

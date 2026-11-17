@@ -41,6 +41,10 @@ SCRYFALL_SETS = "https://api.scryfall.com/sets"
 TCGCSV = "https://tcgcsv.com/tcgplayer/1"  # category 1 = Magic: The Gathering
 HISTORY_URL = "https://infinite-api.tcgplayer.com/price/history/{pid}/detailed?range={rng}"
 PRODUCT_URL = "https://www.tcgplayer.com/product/{pid}"
+SET_URL = "https://www.tcgplayer.com/search/magic/{slug}?productLineName=magic&setName={slug}&view=grid"
+# TCGplayer's own live Market Price for a product. TCGCSV's copy only
+# changes once a day, so this is tried first and TCGCSV is the fallback.
+LIVE_PRICE_URL = "https://mpapi.tcgplayer.com/v2/product/{pid}/pricepoints"
 
 # TCGplayer history ranges. "annual" gives weekly buckets (the 1Y view);
 # "quarter" gives finer buckets for the 1M and 3M views.
@@ -189,6 +193,46 @@ def parse_history(raw: dict) -> list[dict]:
     return points
 
 
+def slugify(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", text.lower().replace("'", "")).strip("-")
+
+
+def set_slug(group: dict, products: list[dict]) -> str:
+    """TCGplayer's URL name for the set, read from a product URL when possible.
+
+    Product URLs look like /product/656312/magic-lorwyn-eclipsed-lorwyn-eclipsed-play-booster-display:
+    "magic-", then the set slug, then the product slug.
+    """
+    for p in products:
+        tail = str(p.get("url", "")).rstrip("/").rsplit("/", 1)[-1]
+        prod = slugify(p.get("cleanName") or p.get("name") or "")
+        if tail.startswith("magic-") and prod and tail.endswith("-" + prod):
+            slug = tail[len("magic-") : -len(prod) - 1]
+            if slug:
+                return slug
+    return slugify(group.get("name", ""))
+
+
+_live_logged = False
+
+
+def live_market(pid: int):
+    """Current Market Price straight from TCGplayer, or None if unavailable."""
+    global _live_logged
+    try:
+        raw = get(LIVE_PRICE_URL.format(pid=pid), tries=2)
+    except RuntimeError as err:
+        if not _live_logged:
+            log(f"    live price unavailable ({err}); using TCGCSV")
+            _live_logged = True
+        return None
+    rows = raw if isinstance(raw, list) else raw.get("results") or raw.get("result") or [raw]
+    for r in rows:
+        if isinstance(r, dict) and str(r.get("printingType", "Normal")).lower() == "normal":
+            return num(r.get("marketPrice"))
+    return None
+
+
 def fetch_history(pid: int) -> dict[str, list[dict]]:
     out = {}
     for rng in HISTORY_RANGES:
@@ -284,6 +328,7 @@ def main() -> int:
             "set_type": s["set_type"],
             "icon_svg_uri": s.get("icon_svg_uri"),
             "group_id": gid,
+            "tcgplayer_url": SET_URL.format(slug=set_slug(group, products)),
             "products": {},
         }
         for kind, prod in picked.items():
@@ -293,6 +338,11 @@ def main() -> int:
             pid = prod["productId"]
             price = prices.get(pid, {})
             current = {k: num(price.get(f"{k}Price")) for k in ("market", "low", "mid", "high")}
+            live = live_market(pid)
+            current["source"] = "TCGplayer" if live is not None else "TCGCSV"
+            if live is not None:
+                current["market"] = live
+            current["checked_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes")
             item = {
                 "product_id": pid,
                 "name": prod.get("name"),
@@ -322,7 +372,8 @@ def main() -> int:
                 log(f"    {kind}: history failed ({err})")
             entry["products"][kind] = item
             daily_rows.append(
-                {"date": today.isoformat(), "set_code": code, "type": kind, "product_id": pid, **current}
+                {"date": today.isoformat(), "set_code": code, "type": kind, "product_id": pid,
+                 **{k: current[k] for k in ("market", "low", "mid", "high")}}
             )
         out_sets.append(entry)
 

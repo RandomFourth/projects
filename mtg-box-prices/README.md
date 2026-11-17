@@ -4,18 +4,24 @@ A dashboard of TCGplayer market price history for the 10 newest Magic sets, show
 
 ## How it works
 
-1. `scripts/update_prices.py` runs once a day in GitHub Actions.
+1. `scripts/update_prices.py` runs every 6 hours in GitHub Actions (03:41, 09:41, 15:41 and 21:41 UTC).
    - Scryfall gives the newest sets (expansion, core, masters and draft innovation; no digital sets).
    - TCGCSV gives each set's TCGplayer group, the two display product IDs, and today's market/low/mid/high price.
    - TCGplayer's price history endpoint (`infinite-api.tcgplayer.com/price/history/<id>/detailed`) gives the weekly market price, items sold and sale range. This is the same data as the "Market Price History" chart on a product page.
 2. It writes `data/prices.json` (read by the page) and appends today's prices to `data/daily_market.csv`, so history keeps growing past TCGplayer's one-year window.
 3. The workflow commits the data and publishes `index.html` plus `data/` to GitHub Pages.
 
-The page reloads `data/prices.json` every 15 minutes, so an open tab picks up each daily update on its own.
+The page reloads `data/prices.json` every 15 minutes, so an open tab picks up each update on its own.
 
 ## Put it on your iPhone
 
 Once the site is published (see Setup), open its address in Safari, tap the Share button, then "Add to Home Screen". It gets its own icon and opens full screen like an app. It checks for new prices whenever you open it.
+
+## Refresh button
+
+The page can't pull prices itself, so the Refresh prices button asks GitHub to run the workflow now, waits for it to publish (about 2 minutes), and reloads. The first tap asks for a GitHub fine-grained token with access to only this repository and the Actions permission set to Read and write. The token is stored only in that browser. Set it up from the home screen app if you use one, since it keeps its own storage separate from Safari.
+
+Without a token, "Or run it on GitHub" in the same dialog opens the workflow page, where Run workflow does the same thing.
 
 ## Setup
 

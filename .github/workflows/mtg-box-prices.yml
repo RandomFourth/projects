@@ -1,10 +1,11 @@
 name: MTG box prices
 
-# Pulls TCGplayer price history once a day, commits the data, and publishes
-# the dashboard to GitHub Pages. TCGCSV refreshes around 20:00 UTC.
+# Pulls TCGplayer price history, commits the data, and publishes
+# the dashboard to GitHub Pages every 6 hours. The dashboard's Refresh
+# button starts it on demand through workflow_dispatch.
 on:
   schedule:
-    - cron: "41 21 * * *"
+    - cron: "41 3,9,15,21 * * *"
   workflow_dispatch:
   push:
     paths:
@@ -29,7 +30,11 @@ jobs:
     outputs:
       pages: ${{ steps.pages.outputs.on }}
     steps:
+      # Check out the branch tip, not the triggering commit, so a run queued
+      # behind another one still sees that run's data commit.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - uses: actions/setup-python@v5
         with:
@@ -48,6 +53,7 @@ jobs:
             echo "No data changes"
           else
             git commit -m "Update MTG box prices $(date -u +%Y-%m-%d)"
+            git pull --rebase --quiet origin "${GITHUB_REF_NAME}"
             git push
           fi
 
