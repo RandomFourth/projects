@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTG Booster Box Prices</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-0: #f4f4f2;
+    --surface-1: #fcfcfb;
+    --border: #e2e1dc;
+    --grid: #ecebe7;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #7a7974;
+    --series-play: #2a78d6;
+    --series-collector: #eb6834;
+    --bars: #b9b8b1;
+    --up: #006300;
+    --down: #b42323;
+    --chip: #ecebe7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface-0: #111110;
+      --surface-1: #1a1a19;
+      --border: #2e2e2b;
+      --grid: #262624;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --text-muted: #8f8e86;
+      --series-play: #3987e5;
+      --series-collector: #d95926;
+      --bars: #55544f;
+      --up: #4cc24c;
+      --down: #ef7b7b;
+      --chip: #2a2a27;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-0: #111110;
+    --surface-1: #1a1a19;
+    --border: #2e2e2b;
+    --grid: #262624;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8e86;
+    --series-play: #3987e5;
+    --series-collector: #d95926;
+    --bars: #55544f;
+    --up: #4cc24c;
+    --down: #ef7b7b;
+    --chip: #2a2a27;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--text-secondary); margin: 0; }
+  .notice { margin: 12px 0 0; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px;
+            background: var(--surface-1); color: var(--text-secondary); font-size: 13px; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 20px 0 16px; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); }
+  .seg button { border: 0; background: none; color: var(--text-secondary); padding: 6px 12px; font: inherit; cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--border); }
+  .seg button[aria-pressed="true"] { background: var(--chip); color: var(--text-primary); font-weight: 600; }
+  .controls .spacer { flex: 1; }
+  .status { color: var(--text-muted); font-size: 12px; }
+
+  .panel-box { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; }
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--chip); }
+  .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 560px), 1fr)); gap: 16px; }
+  .set { padding: 16px; scroll-margin-top: 12px; }
+  .set-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .set-head h2 { font-size: 16px; margin: 0; }
+  .set-head img { width: 18px; height: 18px; align-self: center; }
+  :root[data-theme="dark"] .set-head img { filter: invert(1); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .set-head img { filter: invert(1); } }
+  .meta { color: var(--text-muted); font-size: 12px; }
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panels.single { grid-template-columns: 1fr; }
+  @media (max-width: 560px) { .panels { grid-template-columns: 1fr; } }
+
+  .product { min-width: 0; }
+  .p-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text-secondary); }
+  .p-label a { color: var(--text-muted); text-decoration: none; }
+  .p-label a:hover { text-decoration: underline; }
+  .p-price { display: flex; align-items: baseline; gap: 8px; margin: 2px 0 6px; }
+  .p-price strong { font-size: 22px; font-variant-numeric: tabular-nums; }
+  .chg { font-size: 13px; font-variant-numeric: tabular-nums; }
+  .chg.up { color: var(--up); }
+  .chg.down { color: var(--down); }
+  .chg.flat { color: var(--text-muted); }
+  .chart-price { position: relative; height: 150px; }
+  .chart-qty { position: relative; height: 64px; margin-top: 4px; }
+  .axis-note { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .empty { height: 218px; display: grid; place-items: center; text-align: center; color: var(--text-muted);
+           border: 1px dashed var(--border); border-radius: 8px; padding: 12px; font-size: 13px; }
+  .foot { margin-top: 24px; color: var(--text-muted); font-size: 12px; }
+  .foot a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>MTG Booster Box Prices</h1>
+    <p class="sub">TCGplayer market price history for the newest sets: Play Booster Display and Collector Booster Display.</p>
+    <p class="sub status" id="updated">Loading…</p>
+    <div id="notices"></div>
+  </header>
+
+  <div class="controls" role="toolbar" aria-label="Chart controls">
+    <div class="seg" id="range" aria-label="Time range">
+      <button data-v="30">1M</button><button data-v="91">3M</button><button data-v="182">6M</button><button data-v="365" aria-pressed="true">1Y</button>
+    </div>
+    <div class="seg" id="kind" aria-label="Product">
+      <button data-v="both" aria-pressed="true">Both</button><button data-v="play">Play</button><button data-v="collector">Collector</button>
+    </div>
+    <span class="spacer"></span>
+    <span class="status" id="refresh"></span>
+  </div>
+
+  <div class="panel-box table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Set</th><th>Released</th>
+          <th class="num"><span class="swatch" style="background:var(--series-play)"></span>Play market</th><th class="num">Change</th>
+          <th class="num"><span class="swatch" style="background:var(--series-collector)"></span>Collector market</th><th class="num">Change</th>
+        </tr>
+      </thead>
+      <tbody id="summary"></tbody>
+    </table>
+  </div>
+
+  <div class="grid" id="cards"></div>
+
+  <p class="foot">
+    Market price is TCGplayer's figure from recent sales, grouped by week (by day where TCGplayer offers it).
+    Change compares the first and last point in the selected range. Data refreshes once a day; this page checks for new data every 15 minutes.
+    <span id="srcnote"></span>
+  </p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(() => {
+  const DATA_URL = "data/prices.json";
+  const POLL_MS = 15 * 60 * 1000;
+  const KIND_LABEL = { play: "Play Booster Display", collector: "Collector Booster Display" };
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  let state = { days: 365, kind: "both" };
+  let data = null;
+  let charts = [];
+
+  const $ = (s) => document.querySelector(s);
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const money = (v) => v == null ? "–" : "$" + v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const parse = (iso) => { const [y, m, d] = iso.split("-").map(Number); return new Date(Date.UTC(y, m - 1, d)); };
+  const fmt = (date, withYear) => `${MONTHS[date.getUTCMonth()]} ${date.getUTCDate()}${withYear ? ", " + date.getUTCFullYear() : ""}`;
+  const addDays = (date, n) => new Date(date.getTime() + n * 864e5);
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  // Pick the finest series that covers the window, then trim it to the window.
+  function seriesFor(product, days) {
+    const h = (product && product.history) || {};
+    const fine = h.quarter || [], coarse = h.annual || [];
+    const src = days <= 91 && fine.length >= 2 ? fine : coarse.length ? coarse : fine;
+    if (!src.length) return [];
+    const last = parse(src[src.length - 1].d);
+    const cutoff = addDays(last, -days);
+    const pts = src.filter((p) => parse(p.d) > cutoff && p.m != null);
+    // Attach each bucket's end date so tooltips read "Mar 2 to Mar 8".
+    return pts.map((p, i) => {
+      const start = parse(p.d);
+      const next = pts[i + 1] ? parse(pts[i + 1].d) : null;
+      const prevGap = i > 0 ? (start - parse(pts[i - 1].d)) / 864e5 : 7;
+      const end = next ? addDays(next, -1) : addDays(start, Math.max(prevGap, 1) - 1);
+      return { ...p, start, end };
+    });
+  }
+
+  function change(pts) {
+    if (pts.length < 2 || !pts[0].m) return null;
+    return (pts[pts.length - 1].m - pts[0].m) / pts[0].m * 100;
+  }
+
+  function chgHtml(pct) {
+    if (pct == null) return `<span class="chg flat">–</span>`;
+    const cls = pct > 0.05 ? "up" : pct < -0.05 ? "down" : "flat";
+    const arrow = cls === "up" ? "▲" : cls === "down" ? "▼" : "";
+    return `<span class="chg ${cls}">${arrow} ${pct > 0 ? "+" : ""}${pct.toFixed(2)}%</span>`;
+  }
+
+  function rangeLabel(pts) {
+    if (!pts.length) return "";
+    const a = pts[0].start, b = pts[pts.length - 1].end;
+    return `${fmt(a, true)} to ${fmt(b, true)}`;
+  }
+
+  function renderSummary() {
+    const rows = data.sets.map((s, i) => {
+      const cells = ["play", "collector"].map((k) => {
+        const p = s.products && s.products[k];
+        const pts = seriesFor(p, state.days);
+        const market = p && p.current && p.current.market != null ? p.current.market : pts.length ? pts[pts.length - 1].m : null;
+        return `<td class="num">${p ? money(market) : "–"}</td><td class="num">${p ? chgHtml(change(pts)) : "–"}</td>`;
+      }).join("");
+      return `<tr data-i="${i}"><td>${esc(s.name)} <span class="meta">${esc(s.code)}</span></td><td>${fmt(parse(s.released_at), true)}</td>${cells}</tr>`;
+    });
+    $("#summary").innerHTML = rows.join("");
+    $("#summary").querySelectorAll("tr").forEach((tr) =>
+      tr.addEventListener("click", () => document.getElementById("set-" + tr.dataset.i).scrollIntoView({ behavior: "smooth" })));
+  }
+
+  function productHtml(s, k, si) {
+    const p = s.products && s.products[k];
+    const pts = seriesFor(p, state.days);
+    const head = `<div class="p-label"><span><span class="swatch" style="background:var(--series-${k})"></span>${KIND_LABEL[k]}</span>${
+      p ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">TCGplayer ↗</a>` : ""}</div>`;
+    if (!p) return `<div class="product">${head}<div class="empty">${data.seed ? "Waiting for the first scheduled update." : "Not listed on TCGplayer for this set."}</div></div>`;
+    if (pts.length < 2) {
+      const why = p.history_error ? "Price history could not be read on the last update." : "No price history yet. The next scheduled update fills this in.";
+      return `<div class="product">${head}<div class="p-price"><strong>${money(p.current && p.current.market)}</strong></div><div class="empty">${why}</div></div>`;
+    }
+    const last = pts[pts.length - 1];
+    return `<div class="product">${head}
+      <div class="p-price"><strong>${money(last.m)}</strong>${chgHtml(change(pts))}</div>
+      <div class="chart-price"><canvas id="c-${si}-${k}-p" role="img" aria-label="${esc(s.name)} ${KIND_LABEL[k]} market price, ${rangeLabel(pts)}"></canvas></div>
+      <div class="chart-qty"><canvas id="c-${si}-${k}-q" role="img" aria-label="Items sold per period"></canvas></div>
+      <div class="axis-note">Items sold per ${pts.length > 1 && (pts[1].start - pts[0].start) / 864e5 < 2 ? "day" : "week"} · ${rangeLabel(pts)}</div>
+    </div>`;
+  }
+
+  function renderCards() {
+    charts.forEach((c) => c.destroy());
+    charts = [];
+    const kinds = state.kind === "both" ? ["play", "collector"] : [state.kind];
+    $("#cards").innerHTML = data.sets.map((s, i) => {
+      const rel = parse(s.released_at);
+      const age = Math.round((Date.now() - rel) / 864e5);
+      const ageTxt = age >= 0 ? `${age} days since release` : `preorder, releases in ${-age} days`;
+      return `<section class="panel-box set" id="set-${i}">
+        <div class="set-head">${s.icon_svg_uri ? `<img src="${esc(s.icon_svg_uri)}" alt="">` : ""}<h2>${esc(s.name)}</h2>
+          <span class="meta">${esc(s.code)} · released ${fmt(rel, true)} · ${ageTxt}</span></div>
+        <div class="panels ${kinds.length === 1 ? "single" : ""}">${kinds.map((k) => productHtml(s, k, i)).join("")}</div>
+      </section>`;
+    }).join("");
+    data.sets.forEach((s, i) => kinds.forEach((k) => drawProduct(s, k, i)));
+  }
+
+  function drawProduct(s, k, si) {
+    const pc = document.getElementById(`c-${si}-${k}-p`);
+    if (!pc) return;
+    const pts = seriesFor(s.products[k], state.days);
+    const color = css(`--series-${k}`), grid = css("--grid"), muted = css("--text-muted"), bars = css("--bars");
+    const labels = pts.map((p) => fmt(p.start));
+    const tooltip = {
+      backgroundColor: css("--surface-1"), borderColor: css("--border"), borderWidth: 1,
+      titleColor: css("--text-primary"), bodyColor: css("--text-secondary"), padding: 10, displayColors: false,
+      callbacks: {
+        title: (items) => { const p = pts[items[0].dataIndex]; return (p.end - p.start) / 864e5 < 1 ? fmt(p.start, true) : `${fmt(p.start)} to ${fmt(p.end)}`; },
+        label: (item) => {
+          const p = pts[item.dataIndex];
+          const out = [`Market ${money(p.m)}`, `${p.q.toLocaleString()} items sold`];
+          if (p.lo != null && p.hi != null) out.push(`Sales ${money(p.lo)} to ${money(p.hi)}`);
+          return out;
+        },
+      },
+    };
+    const xAxis = (show) => ({
+      grid: { display: false }, border: { color: grid },
+      ticks: { display: show, color: muted, maxRotation: 0, autoSkip: true, maxTicksLimit: 6, font: { size: 11 } },
+    });
+    const common = { responsive: true, maintainAspectRatio: false, animation: false,
+      interaction: { mode: "index", intersect: false }, plugins: { legend: { display: false }, tooltip } };
+
+    charts.push(new Chart(pc, {
+      type: "line",
+      data: { labels, datasets: [{ data: pts.map((p) => p.m), borderColor: color, borderWidth: 2, tension: 0.25,
+        pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: color, pointHoverBorderColor: css("--surface-1"), pointHoverBorderWidth: 2 }] },
+      options: { ...common, scales: { x: xAxis(false),
+        y: { grid: { color: grid }, border: { display: false }, ticks: { color: muted, font: { size: 11 }, maxTicksLimit: 4, callback: (v) => "$" + v.toLocaleString() } } } },
+    }));
+    charts.push(new Chart(document.getElementById(`c-${si}-${k}-q`), {
+      type: "bar",
+      data: { labels, datasets: [{ data: pts.map((p) => p.q), backgroundColor: bars, hoverBackgroundColor: color, borderRadius: { topLeft: 3, topRight: 3 }, borderSkipped: "bottom", categoryPercentage: 0.8, barPercentage: 0.9 }] },
+      options: { ...common, scales: { x: xAxis(true),
+        y: { grid: { display: false }, border: { display: false }, ticks: { color: muted, font: { size: 10 }, maxTicksLimit: 2 } } } },
+    }));
+  }
+
+  function renderHeader() {
+    const gen = new Date(data.generated_at);
+    const histDates = data.sets.flatMap((s) => Object.values(s.products || {}).filter(Boolean).map((p) => p.history_updated)).filter(Boolean).sort();
+    const latest = histDates[histDates.length - 1];
+    $("#updated").textContent = `Data pulled ${gen.toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}` +
+      (latest ? ` · price history through ${fmt(parse(latest), true)}` : "") + ` · ${data.sets.length} set${data.sets.length === 1 ? "" : "s"}`;
+    const notes = (data.problems || []);
+    $("#notices").innerHTML = notes.length
+      ? `<div class="notice">${notes.slice(0, 4).map(esc).join("<br>")}${notes.length > 4 ? `<br>…and ${notes.length - 4} more` : ""}</div>` : "";
+    $("#srcnote").innerHTML = data.tcgcsv_updated ? `Current market prices via TCGCSV, updated ${esc(data.tcgcsv_updated)}.` : "";
+  }
+
+  function render() {
+    if (!data) return;
+    renderHeader();
+    renderSummary();
+    renderCards();
+  }
+
+  async function load(initial) {
+    try {
+      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(res.status);
+      const next = await res.json();
+      const changed = !data || next.generated_at !== data.generated_at;
+      data = next;
+      if (changed) render();
+      $("#refresh").textContent = `Checked ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
+    } catch (err) {
+      if (initial) $("#updated").textContent = `Could not load ${DATA_URL} (${err.message}).`;
+      $("#refresh").textContent = "Check for new data failed; retrying in 15 minutes";
+    }
+  }
+
+  function wireSeg(id, key, cast) {
+    const seg = document.getElementById(id);
+    seg.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      seg.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      state[key] = cast(b.dataset.v);
+      try { localStorage.setItem("mtgbox-" + key, b.dataset.v); } catch (_) {}
+      render();
+    });
+    try {
+      const saved = localStorage.getItem("mtgbox-" + key);
+      const btn = saved && seg.querySelector(`button[data-v="${saved}"]`);
+      if (btn) { seg.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === btn))); state[key] = cast(saved); }
+    } catch (_) {}
+  }
+
+  wireSeg("range", "days", Number);
+  wireSeg("kind", "kind", String);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  load(true);
+  setInterval(() => load(false), POLL_MS);
+})();
+</script>
+</body>
+</html>

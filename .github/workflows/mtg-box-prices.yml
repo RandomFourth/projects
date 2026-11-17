@@ -1,0 +1,64 @@
+name: MTG box prices
+
+# Pulls TCGplayer price history once a day, commits the data, and publishes
+# the dashboard to GitHub Pages. TCGCSV refreshes around 20:00 UTC.
+on:
+  schedule:
+    - cron: "41 21 * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - "mtg-box-prices/index.html"
+      - "mtg-box-prices/scripts/**"
+      - "mtg-box-prices/config/**"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: mtg-box-prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pull prices
+        working-directory: mtg-box-prices
+        run: python3 scripts/update_prices.py --sets 10
+
+      - name: Commit data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mtg-box-prices/data
+          if git diff --cached --quiet; then
+            echo "No data changes"
+          else
+            git commit -m "Update MTG box prices $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: mtg-box-prices
+
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

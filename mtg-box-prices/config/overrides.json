@@ -1,0 +1,8 @@
+{
+  "_help": "Optional fixes when automatic matching picks the wrong thing. group_ids: set code -> TCGCSV groupId. product_ids: set code -> {play: id, collector: id}. skip_sets: set codes to leave off the dashboard.",
+  "group_ids": {},
+  "product_ids": {
+    "ECL": { "play": 656312 }
+  },
+  "skip_sets": []
+}
