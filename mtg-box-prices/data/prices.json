@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-18T22:42:26+00:00",
+ "generated_at": "2026-11-19T00:40:58+00:00",
  "tcgcsv_updated": "2026-11-18T20:05:56+0000",
  "sets": [
   {
@@ -17,12 +17,12 @@
      "url": "https://www.tcgplayer.com/product/706138",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/706138_200w.jpg",
      "current": {
-      "market": 104.35,
+      "market": 104.27,
       "low": 103.23,
       "mid": 132.49,
       "high": 394.95,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -379,26 +379,19 @@
        {
         "d": "2026-11-02",
         "m": 106.1,
-        "q": 1972,
+        "q": 1970,
         "lo": 87.0,
         "hi": 119.55
        },
        {
         "d": "2026-11-09",
-        "m": 104.35,
-        "q": 520,
+        "m": 104.29,
+        "q": 536,
         "lo": 90.0,
         "hi": 112.36
        }
       ],
       "quarter": [
-       {
-        "d": "2026-08-18",
-        "m": 154.69,
-        "q": 27,
-        "lo": 154.63,
-        "hi": 154.78
-       },
        {
         "d": "2026-08-21",
         "m": 154.64,
@@ -591,20 +584,27 @@
        {
         "d": "2026-11-10",
         "m": 104.59,
-        "q": 947,
+        "q": 945,
         "lo": 87.0,
         "hi": 119.55
        },
        {
         "d": "2026-11-13",
-        "m": 104.41,
-        "q": 521,
+        "m": 104.38,
+        "q": 538,
         "lo": 90.0,
         "hi": 112.36
+       },
+       {
+        "d": "2026-11-16",
+        "m": 104.38,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -613,12 +613,12 @@
      "url": "https://www.tcgplayer.com/product/706142",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/706142_200w.jpg",
      "current": {
-      "market": 386.96,
+      "market": 387.18,
       "low": 380.0,
       "mid": 458.49,
       "high": 947.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -981,8 +981,8 @@
        },
        {
         "d": "2026-11-09",
-        "m": 387.09,
-        "q": 249,
+        "m": 387.18,
+        "q": 263,
         "lo": 350.0,
         "hi": 409.94
        }
@@ -1193,14 +1193,14 @@
        },
        {
         "d": "2026-11-13",
-        "m": 388.13,
-        "q": 246,
-        "lo": 333.31,
+        "m": 387.97,
+        "q": 258,
+        "lo": 350.0,
         "hi": 409.94
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -1220,12 +1220,12 @@
      "url": "https://www.tcgplayer.com/product/692980",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/692980_200w.jpg",
      "current": {
-      "market": 114.99,
+      "market": 114.9,
       "low": 111.81,
       "mid": 140.95,
       "high": 298.98,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -1588,20 +1588,13 @@
        },
        {
         "d": "2026-11-09",
-        "m": 114.99,
-        "q": 97,
+        "m": 114.96,
+        "q": 98,
         "lo": 100.0,
         "hi": 118.99
        }
       ],
       "quarter": [
-       {
-        "d": "2026-08-18",
-        "m": 150.39,
-        "q": 19,
-        "lo": 150.58,
-        "hi": 183.96
-       },
        {
         "d": "2026-08-21",
         "m": 151.86,
@@ -1800,14 +1793,21 @@
        },
        {
         "d": "2026-11-13",
-        "m": 115.81,
-        "q": 96,
+        "m": 115.79,
+        "q": 98,
         "lo": 100.0,
         "hi": 118.99
+       },
+       {
+        "d": "2026-11-16",
+        "m": 115.79,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -1816,12 +1816,12 @@
      "url": "https://www.tcgplayer.com/product/692983",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/692983_200w.jpg",
      "current": {
-      "market": 365.67,
+      "market": 365.39,
       "low": 358.0,
       "mid": 456.0,
       "high": 1999.95,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -2184,20 +2184,13 @@
        },
        {
         "d": "2026-11-09",
-        "m": 367.71,
-        "q": 27,
-        "lo": 358.0,
+        "m": 365.39,
+        "q": 30,
+        "lo": 344.99,
         "hi": 395.19
        }
       ],
       "quarter": [
-       {
-        "d": "2026-08-18",
-        "m": 487.29,
-        "q": 37,
-        "lo": 473.38,
-        "hi": 534.93
-       },
        {
         "d": "2026-08-21",
         "m": 528.87,
@@ -2396,14 +2389,21 @@
        },
        {
         "d": "2026-11-13",
-        "m": 368.27,
-        "q": 28,
+        "m": 367.8,
+        "q": 30,
         "lo": 344.99,
         "hi": 395.19
+       },
+       {
+        "d": "2026-11-16",
+        "m": 367.8,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -2423,12 +2423,12 @@
      "url": "https://www.tcgplayer.com/product/692960",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/692960_200w.jpg",
      "current": {
-      "market": 130.99,
+      "market": 131.02,
       "low": 125.0,
       "mid": 187.81,
       "high": 9999.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -2791,8 +2791,8 @@
        },
        {
         "d": "2026-11-09",
-        "m": 130.99,
-        "q": 49,
+        "m": 131.02,
+        "q": 52,
         "lo": 124.99,
         "hi": 140.49
        }
@@ -3003,14 +3003,14 @@
        },
        {
         "d": "2026-11-13",
-        "m": 131.77,
-        "q": 49,
+        "m": 131.78,
+        "q": 51,
         "lo": 124.99,
         "hi": 140.49
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -3024,7 +3024,7 @@
       "mid": 799.99,
       "high": 3000.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -3387,20 +3387,13 @@
        },
        {
         "d": "2026-11-09",
-        "m": 539.81,
-        "q": 56,
+        "m": 539.77,
+        "q": 62,
         "lo": 524.0,
         "hi": 554.95
        }
       ],
       "quarter": [
-       {
-        "d": "2026-08-18",
-        "m": 839.32,
-        "q": 100,
-        "lo": 809.95,
-        "hi": 873.0
-       },
        {
         "d": "2026-08-21",
         "m": 853.63,
@@ -3599,14 +3592,21 @@
        },
        {
         "d": "2026-11-13",
-        "m": 542.87,
-        "q": 56,
+        "m": 542.85,
+        "q": 62,
         "lo": 524.0,
         "hi": 554.95
+       },
+       {
+        "d": "2026-11-16",
+        "m": 542.85,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -3631,7 +3631,7 @@
       "mid": 140.0,
       "high": 374.07,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -4213,7 +4213,7 @@
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -4222,12 +4222,12 @@
      "url": "https://www.tcgplayer.com/product/675606",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/675606_200w.jpg",
      "current": {
-      "market": 414.15,
+      "market": 407.13,
       "low": 399.97,
       "mid": 549.99,
       "high": 1795.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -4590,20 +4590,13 @@
        },
        {
         "d": "2026-11-09",
-        "m": 422.47,
-        "q": 16,
-        "lo": 394.0,
+        "m": 409.3,
+        "q": 22,
+        "lo": 350.0,
         "hi": 429.98
        }
       ],
       "quarter": [
-       {
-        "d": "2026-08-18",
-        "m": 471.77,
-        "q": 24,
-        "lo": 430.0,
-        "hi": 497.99
-       },
        {
         "d": "2026-08-21",
         "m": 475.99,
@@ -4802,14 +4795,21 @@
        },
        {
         "d": "2026-11-13",
-        "m": 426.62,
-        "q": 20,
+        "m": 424.28,
+        "q": 23,
         "lo": 350.0,
         "hi": 429.98
+       },
+       {
+        "d": "2026-11-16",
+        "m": 424.28,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -4834,7 +4834,7 @@
       "mid": 159.99,
       "high": 351.14,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -5205,13 +5205,6 @@
       ],
       "quarter": [
        {
-        "d": "2026-08-18",
-        "m": 140.92,
-        "q": 18,
-        "lo": 130.0,
-        "hi": 154.99
-       },
-       {
         "d": "2026-08-21",
         "m": 141.48,
         "q": 45,
@@ -5413,10 +5406,17 @@
         "q": 18,
         "lo": 122.89,
         "hi": 149.98
+       },
+       {
+        "d": "2026-11-16",
+        "m": 143.14,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -5430,7 +5430,7 @@
       "mid": 599.96,
       "high": 9999.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:41+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -6012,7 +6012,7 @@
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -6037,7 +6037,7 @@
       "mid": 144.94,
       "high": 9999.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -6400,20 +6400,13 @@
        },
        {
         "d": "2026-11-09",
-        "m": 100.22,
-        "q": 20,
+        "m": 100.04,
+        "q": 21,
         "lo": 90.0,
         "hi": 108.07
        }
       ],
       "quarter": [
-       {
-        "d": "2026-08-18",
-        "m": 113.65,
-        "q": 29,
-        "lo": 108.38,
-        "hi": 119.99
-       },
        {
         "d": "2026-08-21",
         "m": 116.02,
@@ -6616,10 +6609,17 @@
         "q": 21,
         "lo": 90.0,
         "hi": 108.07
+       },
+       {
+        "d": "2026-11-16",
+        "m": 100.11,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -6633,7 +6633,7 @@
       "mid": 534.94,
       "high": 1599.99,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -7215,7 +7215,7 @@
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -7235,12 +7235,12 @@
      "url": "https://www.tcgplayer.com/product/656312",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/656312_200w.jpg",
      "current": {
-      "market": 105.0,
+      "market": 104.7,
       "low": 98.4,
       "mid": 147.17,
       "high": 9999.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -7603,8 +7603,8 @@
        },
        {
         "d": "2026-11-09",
-        "m": 105.0,
-        "q": 44,
+        "m": 104.7,
+        "q": 45,
         "lo": 90.89,
         "hi": 106.84
        }
@@ -7815,14 +7815,14 @@
        },
        {
         "d": "2026-11-13",
-        "m": 105.09,
-        "q": 44,
+        "m": 104.99,
+        "q": 45,
         "lo": 90.89,
         "hi": 106.84
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -7836,7 +7836,7 @@
       "mid": 508.86,
       "high": 1501.99,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -8207,13 +8207,6 @@
       ],
       "quarter": [
        {
-        "d": "2026-08-18",
-        "m": 413.5,
-        "q": 1,
-        "lo": 420.0,
-        "hi": 420.0
-       },
-       {
         "d": "2026-08-21",
         "m": 416.79,
         "q": 12,
@@ -8415,10 +8408,17 @@
         "q": 12,
         "lo": 390.0,
         "hi": 410.7
+       },
+       {
+        "d": "2026-11-16",
+        "m": 402.95,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -8443,7 +8443,7 @@
       "mid": 156.68,
       "high": 999.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -8814,13 +8814,6 @@
       ],
       "quarter": [
        {
-        "d": "2026-08-18",
-        "m": 127.09,
-        "q": 22,
-        "lo": 119.99,
-        "hi": 129.99
-       },
-       {
         "d": "2026-08-21",
         "m": 125.11,
         "q": 38,
@@ -9022,10 +9015,17 @@
         "q": 16,
         "lo": 118.95,
         "hi": 136.98
+       },
+       {
+        "d": "2026-11-16",
+        "m": 124.81,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -9034,12 +9034,12 @@
      "url": "https://www.tcgplayer.com/product/648650",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/648650_200w.jpg",
      "current": {
-      "market": 482.42,
+      "market": 479.98,
       "low": 449.99,
       "mid": 599.45,
       "high": 1500.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -9410,13 +9410,6 @@
       ],
       "quarter": [
        {
-        "d": "2026-08-18",
-        "m": 472.4,
-        "q": 15,
-        "lo": 448.4,
-        "hi": 500.0
-       },
-       {
         "d": "2026-08-21",
         "m": 472.8,
         "q": 12,
@@ -9618,10 +9611,17 @@
         "q": 9,
         "lo": 420.0,
         "hi": 500.0
+       },
+       {
+        "d": "2026-11-16",
+        "m": 481.97,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -9646,7 +9646,7 @@
       "mid": 150.0,
       "high": 415.2,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -10017,13 +10017,6 @@
       ],
       "quarter": [
        {
-        "d": "2026-08-18",
-        "m": 126.35,
-        "q": 26,
-        "lo": 115.99,
-        "hi": 137.49
-       },
-       {
         "d": "2026-08-21",
         "m": 128.25,
         "q": 24,
@@ -10225,10 +10218,17 @@
         "q": 22,
         "lo": 107.5,
         "hi": 128.36
+       },
+       {
+        "d": "2026-11-16",
+        "m": 110.77,
+        "q": 0,
+        "lo": null,
+        "hi": null
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -10242,7 +10242,7 @@
       "mid": 595.0,
       "high": 2000.0,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -10824,7 +10824,7 @@
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
@@ -10844,12 +10844,12 @@
      "url": "https://www.tcgplayer.com/product/619674",
      "image": "https://tcgplayer-cdn.tcgplayer.com/product/619674_200w.jpg",
      "current": {
-      "market": 192.44,
+      "market": 192.2,
       "low": 182.0,
       "mid": 200.0,
       "high": 301.99,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -11212,8 +11212,8 @@
        },
        {
         "d": "2026-11-09",
-        "m": 192.44,
-        "q": 16,
+        "m": 192.2,
+        "q": 17,
         "lo": 186.97,
         "hi": 204.99
        }
@@ -11424,14 +11424,14 @@
        },
        {
         "d": "2026-11-13",
-        "m": 192.5,
-        "q": 14,
+        "m": 192.56,
+        "q": 16,
         "lo": 186.97,
         "hi": 204.99
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     },
     "collector": {
@@ -11445,7 +11445,7 @@
       "mid": 874.92,
       "high": 1835.79,
       "source": "TCGplayer",
-      "checked_at": "2026-11-18T22:42+00:00"
+      "checked_at": "2026-11-19T00:40+00:00"
      },
      "history": {
       "annual": [
@@ -12027,7 +12027,7 @@
        }
       ]
      },
-     "history_updated": "2026-11-18",
+     "history_updated": "2026-11-19",
      "history_error": null
     }
    }
