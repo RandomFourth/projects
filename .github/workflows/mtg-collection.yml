@@ -1,0 +1,32 @@
+name: MTG collection prices
+
+# Prices the Notion "Sealed Collection" from TCGplayer. Runs every 3 hours so
+# new items are filled in quickly; each item's price is recorded once a week.
+# Collection data lives only in Notion: nothing is committed, and the script
+# keeps product names and prices out of these public logs.
+on:
+  schedule:
+    - cron: "23 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mtg-collection
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync prices to Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: python3 mtg-collection/sync_notion.py
